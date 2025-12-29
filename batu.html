@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Batu Pengantin - Cerita Rakyat Muna</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Georgia', serif;
+        }
+        
+        body {
+            background-color: #f5f0e6;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" opacity="0.05"><path d="M20,50 C40,10 60,90 80,50" stroke="%23333" fill="none"/></svg>');
+        }
+        
+        .book-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            position: relative;
+            border: 1px solid #d4b483;
+        }
+        
+        .book-title {
+            text-align: center;
+            color: #8b4513;
+            margin-bottom: 10px;
+            font-size: 2.5rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+            border-bottom: 2px solid #d4b483;
+            padding-bottom: 15px;
+        }
+        
+        .book-subtitle {
+            text-align: center;
+            color: #a0522d;
+            font-style: italic;
+            margin-bottom: 30px;
+        }
+        
+        .chapter {
+            margin-bottom: 40px;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: #f9f5ed;
+            border-left: 5px solid #d4b483;
+            transition: transform 0.3s;
+        }
+        
+        .chapter:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .chapter-title {
+            color: #8b4513;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .chapter-content {
+            text-align: justify;
+            font-size: 1.1rem;
+            color: #555;
+            text-indent: 40px;
+        }
+        
+        .illustration {
+            width: 100%;
+            max-width: 400px;
+            margin: 20px auto;
+            display: block;
+            border-radius: 5px;
+            border: 1px solid #d4b483;
+        }
+        
+        .page-controls {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #d4b483;
+        }
+        
+        button {
+            padding: 10px 20px;
+            background-color: #8b4513;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #a0522d;
+        }
+        
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        
+        .page-info {
+            align-self: center;
+            color: #8b4513;
+            font-weight: bold;
+        }
+        
+        .bookmark {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            width: 30px;
+            height: 60px;
+            background-color: #a0522d;
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 80%, 0 100%);
+        }
+        
+        .moral {
+            background-color: #e8dfca;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+            font-style: italic;
+            text-align: center;
+            border: 1px dashed #8b4513;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .book-container {
+                padding: 15px;
+            }
+            
+            .book-title {
+                font-size: 2rem;
+            }
+            
+            .chapter {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="book-container">
+        <div class="bookmark"></div>
+        <h1 class="book-title">BATU PENGANTIN</h1>
+        <h3 class="book-subtitle">Cerita Rakyat dari Pulau Muna, Sulawesi Tenggara</h3>
+        
+        <div id="book-content">
+            <!-- Isi buku akan diisi oleh JavaScript -->
+        </div>
+        
+        <div class="moral">
+            <strong>Pesan Moral:</strong> Cerita ini mengajarkan tentang kesetiaan, cinta sejati, dan pentingnya saling percaya dalam hubungan.
+        </div>
+        
+        <div class="page-controls">
+            <button id="prev-btn" disabled>← Halaman Sebelumnya</button>
+            <div class="page-info">Halaman <span id="current-page">1</span> dari <span id="total-pages">6</span></div>
+            <button id="next-btn">Halaman Selanjutnya →</button>
+        </div>
+    </div>
+
+    <script>
+        // Data cerita "Batu Pengantin"
+        const storyChapters = [
+            {
+                title: "Permulaan Kisah",
+                content: "Di sebuah desa yang permai di Pulau Muna, hiduplah sepasang kekasih yang saling mencintai dengan tulus. Pemuda itu bernama La Ode, seorang pemuda tampan, rajin, dan berbakti kepada orang tua. Gadisnya bernama Wa Ode, seorang gadis cantik, lembut hati, dan pandai menenun. Mereka telah bertunangan dan berjanji akan melangsungkan pernikahan ketika musim panen tiba. Setiap hari mereka bertemu di bawah pohon rindang sambil berbagi cerita dan impian tentang masa depan."
+            },
+            {
+                title: "Kabur Kabar Buruk",
+                content: "Namun, takdir berkata lain. Seminggu sebelum hari pernikahan, seorang utusan kerajaan datang dengan pesan penting. Raja memanggil La Ode untuk mengabdi di istana selama satu tahun penuh. Tugas ini adalah kehormatan besar yang tidak bisa ditolak. Dengan hati berat, La Ode menyampaikan kabar ini kepada Wa Ode."
+            },
+            {
+                title: "Janji di Bawah Batu",
+                content: "Di bawah sebuah batu besar di pinggir desa, mereka berdua berjanji. 'Batu ini akan menjadi saksi cinta dan kesetiaan kita,' ucap La Ode sambil memegang tangan Wa Ode erat-erat. 'Aku akan menunggumu di sini, setiap hari,' janji Wa Ode dengan mata berkaca-kaca. Wa Ode menepati janjinya. Setiap sore, setelah membantu orang tuanya, ia duduk di dekat batu besar itu sambil menenun kain. Benang demi benang ia rajut, harapan demi harapan ia simpan dalam hati."
+            },
+            {
+                title: "Kepulangan yang Mengecewakan",
+                content: "Setahun berlalu. La Ode kembali dengan membawa banyak hadiah dari raja. Pakaiannya yang bagus dan penampilannya yang berubah membuat Wa Ode ragu. 'Benarkah ini La Ode yang aku tunggu?' batinnya. La Ode mendekat, tetapi Wa Ode mundur ketakutan. 'Jangan mendekat! Kamu bukan La Ode!' teriak Wa Ode. 'Aku La Ode, sayang. Aku telah kembali seperti janjiku,' bujuk La Ode. Tapi Wa Ode tidak percaya. Air matanya bercucuran. 'La Ode-ku tidak seberani ini. La Ode-ku tidak memakai pakaian sebegitu bagus.'"
+            },
+            {
+                title: "Kutukan Menjadi Batu",
+                content: "Kesedihan yang mendalam menyelimuti mereka berdua. La Ode sedih karena tidak diakui oleh orang yang paling dicintainya. Wa Ode sedih karena merasa ditinggalkan oleh kekasih hatinya. Dengan perlahan, tubuh mereka mulai berubah. Kaki mereka membatu, lalu tubuh, hingga akhirnya seluruh badan mereka menjadi batu. Dua batu itu tetap berdiri berhadapan, seolah masih memandang satu sama lain."
+            },
+            {
+                title: "Warisan untuk Generasi",
+                content: "Hingga kini, batu itu dikenal sebagai 'Batu Pengantin' atau 'Oheo' oleh masyarakat Muna. Batu itu menjadi pengingat akan kesetiaan, cinta, dan pentingnya saling percaya. Cerita ini terus diceritakan turun-temurun agar generasi muda tidak melupakan nilai-nilai luhur yang diwariskan nenek moyang mereka."
+            }
+        ];
+
+        // Variabel untuk melacak halaman saat ini
+        let currentPage = 0;
+        const totalPages = storyChapters.length;
+
+        // Elemen DOM
+        const bookContent = document.getElementById('book-content');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const currentPageSpan = document.getElementById('current-page');
+        const totalPagesSpan = document.getElementById('total-pages');
+
+        // Inisialisasi tampilan
+        totalPagesSpan.textContent = totalPages;
+        
+        // Fungsi untuk menampilkan halaman
+        function renderPage(pageNum) {
+            // Kosongkan konten
+            bookContent.innerHTML = '';
+            
+            // Tampilkan bab sesuai halaman
+            const chapter = storyChapters[pageNum];
+            
+            // Buat elemen untuk bab
+            const chapterElement = document.createElement('div');
+            chapterElement.className = 'chapter';
+            
+            // Tambahkan judul bab
+            const titleElement = document.createElement('h2');
+            titleElement.className = 'chapter-title';
+            titleElement.textContent = `Bab ${pageNum + 1}: ${chapter.title}`;
+            chapterElement.appendChild(titleElement);
+            
+            // Tambahkan konten bab
+            const contentElement = document.createElement('p');
+            contentElement.className = 'chapter-content';
+            contentElement.textContent = chapter.content;
+            chapterElement.appendChild(contentElement);
+            
+            // Tambahkan ilustrasi berdasarkan bab
+            if (pageNum === 0) {
+                const imgElement = document.createElement('div');
+                imgElement.innerHTML = `
+                    <div style="text-align:center; margin:20px 0; ">
+                        <img src="/assets/pulau muna ilustrsi.jpg" 
+                 alt="Desa di Pulau Muna" 
+                 style="max-width:100%; max-height:400px; height:auto; border-radius:8px;">
+            <div style="color:#8b4513; font-style:italic; margin-top:10px;">
+                        [Ilustrasi: Desa di Pulau Muna]
+                    </div>
+                `;
+                chapterElement.appendChild(imgElement);
+            } else if (pageNum === 2) {
+                const imgElement = document.createElement('div');
+                imgElement.innerHTML = `
+                    <div style="text-align:center; margin:20px 0; color:#8b4513; font-style:italic;">
+                        [Ilustrasi: La Ode dan Wa Ode berjanji di bawah batu besar]
+                    </div>
+                `;
+                chapterElement.appendChild(imgElement);
+            } else if (pageNum === 4) {
+                const imgElement = document.createElement('div');
+                imgElement.innerHTML = `
+                    <div style="text-align:center; margin:20px 0; color:#8b4513; font-style:italic;">
+                        [Ilustrasi: La Ode dan Wa Ode berubah menjadi batu]
+                    </div>
+                `;
+                chapterElement.appendChild(imgElement);
+            }
+            
+            // Tambahkan ke konten buku
+            bookContent.appendChild(chapterElement);
+            
+            // Perbarui informasi halaman
+            currentPageSpan.textContent = pageNum + 1;
+            
+            // Perbarui status tombol
+            prevBtn.disabled = pageNum === 0;
+            nextBtn.disabled = pageNum === totalPages - 1;
+        }
+
+        // Event listener untuk tombol
+        prevBtn.addEventListener('click', () => {
+            if (currentPage > 0) {
+                currentPage--;
+                renderPage(currentPage);
+            }
+        });
+
+        nextBtn.addEventListener('click', () => {
+            if (currentPage < totalPages - 1) {
+                currentPage++;
+                renderPage(currentPage);
+            }
+        });
+
+        // Tambahkan navigasi keyboard
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft' && currentPage > 0) {
+                currentPage--;
+                renderPage(currentPage);
+            } else if (e.key === 'ArrowRight' && currentPage < totalPages - 1) {
+                currentPage++;
+                renderPage(currentPage);
+            }
+        });
+
+        // Render halaman pertama saat memuat
+        renderPage(currentPage);
+    </script>
+</body>
+</html>
